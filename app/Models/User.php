@@ -30,6 +30,7 @@ class User extends Authenticatable
         'name_bangla',
         'empid',
         'password',
+        'user_type'
     ];
 
     /**

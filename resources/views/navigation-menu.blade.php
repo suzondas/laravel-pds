@@ -15,9 +15,31 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('pds') }}" :active="request()->routeIs('pds')">
-                        {{ __('PDS') }}
-                    </x-jet-nav-link>
+                    @if(Auth::user()->user_type==2)
+                        <x-jet-nav-link href="{{ route('pds') }}" :active="request()->routeIs('pds')">
+                            {{ __('PDS') }}
+                        </x-jet-nav-link>
+                    @elseif(Auth::user()->user_type==1)
+                        <div class="dropdown">
+                            <x-jet-nav-link href="#">
+                                {{ __('Settings') }}
+                            </x-jet-nav-link>
+                            <div class="dropdown-content">
+                                <x-jet-nav-link href="{{ route('countries') }}" :active="request()->routeIs('countries')">
+                                    {{ __('Countries') }}
+                                </x-jet-nav-link>
+                                <x-jet-nav-link href="{{ route('degrees') }}" :active="request()->routeIs('degrees')">
+                                    {{ __('Degrees') }}
+                                </x-jet-nav-link>
+                                <x-jet-nav-link href="{{ route('designations') }}" :active="request()->routeIs('designations')">
+                                    {{ __('Designations') }}
+                                </x-jet-nav-link>
+                                <x-jet-nav-link href="{{ route('offices') }}" :active="request()->routeIs('offices')">
+                                    {{ __('Offices') }}
+                                </x-jet-nav-link>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -174,9 +196,31 @@
                 <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('pds') }}" :active="request()->routeIs('pds')">
-                    {{ __('PDS') }}
-                </x-jet-responsive-nav-link>
+                @if(Auth::user()->user_type==2)
+                    <x-jet-nav-link href="{{ route('pds') }}" :active="request()->routeIs('pds')">
+                        {{ __('PDS') }}
+                    </x-jet-nav-link>
+                @elseif(Auth::user()->user_type==1)
+                    <div class="dropdown">
+                        <x-jet-nav-link href="#">
+                            {{ __('Settings') }}
+                        </x-jet-nav-link>
+                        <div class="dropdown-content">
+                            <x-jet-nav-link href="{{ route('countries') }}" :active="request()->routeIs('countries')">
+                                {{ __('Countries') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('degrees') }}" :active="request()->routeIs('degrees')">
+                                {{ __('Degrees') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('designations') }}" :active="request()->routeIs('designations')">
+                                {{ __('Designations') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('offices') }}" :active="request()->routeIs('offices')">
+                                {{ __('Offices') }}
+                            </x-jet-nav-link>
+                        </div>
+                    </div>
+                @endif
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
                                            :active="request()->routeIs('profile.show')">
