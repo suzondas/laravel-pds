@@ -20,25 +20,9 @@
                             {{ __('PDS') }}
                         </x-jet-nav-link>
                     @elseif(Auth::user()->user_type==1)
-                        <div class="dropdown">
-                            <x-jet-nav-link href="#">
-                                {{ __('Settings') }}
-                            </x-jet-nav-link>
-                            <div class="dropdown-content">
-                                <x-jet-nav-link href="{{ route('countries') }}" :active="request()->routeIs('countries')">
-                                    {{ __('Countries') }}
-                                </x-jet-nav-link>
-                                <x-jet-nav-link href="{{ route('degrees') }}" :active="request()->routeIs('degrees')">
-                                    {{ __('Degrees') }}
-                                </x-jet-nav-link>
-                                <x-jet-nav-link href="{{ route('designations') }}" :active="request()->routeIs('designations')">
-                                    {{ __('Designations') }}
-                                </x-jet-nav-link>
-                                <x-jet-nav-link href="{{ route('offices') }}" :active="request()->routeIs('offices')">
-                                    {{ __('Offices') }}
-                                </x-jet-nav-link>
-                            </div>
-                        </div>
+                        <x-jet-nav-link href="{{route('settings')}}" :active="request()->routeIs('settings')">
+                            {{__('Settings')}}
+                        </x-jet-nav-link>
                     @endif
                 </div>
             </div>
@@ -201,25 +185,9 @@
                         {{ __('PDS') }}
                     </x-jet-nav-link>
                 @elseif(Auth::user()->user_type==1)
-                    <div class="dropdown">
-                        <x-jet-nav-link href="#">
-                            {{ __('Settings') }}
-                        </x-jet-nav-link>
-                        <div class="dropdown-content">
-                            <x-jet-nav-link href="{{ route('countries') }}" :active="request()->routeIs('countries')">
-                                {{ __('Countries') }}
-                            </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('degrees') }}" :active="request()->routeIs('degrees')">
-                                {{ __('Degrees') }}
-                            </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('designations') }}" :active="request()->routeIs('designations')">
-                                {{ __('Designations') }}
-                            </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('offices') }}" :active="request()->routeIs('offices')">
-                                {{ __('Offices') }}
-                            </x-jet-nav-link>
-                        </div>
-                    </div>
+                    <x-jet-nav-link href="{{route('settings')}}" :active="request()->routeIs('settings')">
+                        {{__('Settings')}}
+                    </x-jet-nav-link>
                 @endif
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}"

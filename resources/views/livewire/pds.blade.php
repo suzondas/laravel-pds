@@ -1,4 +1,10 @@
 <div class="pattern">
+    <style>
+        .pattern {
+            background-color: rgb(223, 219, 229);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M12 0h18v6h6v6h6v18h-6v6h-6v6H12v-6H6v-6H0V12h6V6h6V0zm12 6h-6v6h-6v6H6v6h6v6h6v6h6v-6h6v-6h6v-6h-6v-6h-6V6zm-6 12h6v6h-6v-6zm24 24h6v6h-6v-6z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Personal Data Sheet') }}
@@ -61,7 +67,9 @@
 
                 <x-jet-label for="rank" value="{{ __('Rank') }}"/>
                 <select wire:model.defer="general_information.rank">
-                    <option value="1">AD Sec</option>
+                    @foreach($designations as $key=>$val)
+                        <option value="{{$val->id}}">{{$val->name_english}}</option>
+                    @endforeach
                 </select>
                 <x-jet-input-error for="general_information.rank" class="mt-2"/>
 
@@ -75,13 +83,17 @@
 
                 <x-jet-label for="designation" value="{{ __('designation') }}"/>
                 <select wire:model.defer="general_information.designation">
-                    <option value="1">AD</option>
+                    @foreach($designations as $key=>$val)
+                        <option value="{{$val->id}}">{{$val->name_english}}</option>
+                    @endforeach
                 </select>
                 <x-jet-input-error for="general_information.designation" class="mt-2"/>
 
                 <x-jet-label for="office_name" value="{{ __('office_name') }}"/>
                 <select wire:model.defer="general_information.office_name">
-                    <option value="1">HQ</option>
+                    @foreach($offices as $key=>$val)
+                        <option value="{{$val->id}}">{{$val->name}}</option>
+                    @endforeach
                 </select>
                 <x-jet-input-error for="general_information.office_name" class="mt-2"/>
 
@@ -104,7 +116,6 @@
 
                 <x-jet-label for="religion" value="{{ __('religion') }}"/>
                 <select class="mt-1 block w-full" wire:model.defer="general_information.religion">
-                    <option>select</option>
                     <option value="1">Islam</option>
                     <option value="2">Hinduism</option>
                     <option value="3">Christianity</option>
@@ -121,14 +132,13 @@
                 </select>
                 <x-jet-input-error for="general_information.marital_status" class="mt-2"/>
 
-                <x-jet-label for="nid" value="{{ __('nid') }}"/>
+                <x-jet-label for="nid" value="{{ __('nid (10/17 Digit)') }}"/>
                 <x-jet-input id="nid" type="number" class="mt-1 block w-full"
                              wire:model.defer="general_information.nid" autocomplete="nid"/>
                 <x-jet-input-error for="general_information.nid" class="mt-2"/>
 
                 <x-jet-label for="freedom_fighter" value="{{ __('freedom_fighter') }}"/>
                 <select class="mt-1 block w-full" wire:model.defer="general_information.freedom_fighter">
-                    <option value="">Select</option>
                     <option value="1">None</option>
                     <option value="2">Freedom Fighter</option>
                     <option value="3">Son/Daughter of Freedom Fighter</option>
@@ -366,8 +376,13 @@
                 <x-jet-input-error for="address_information.post_office_present" class="mt-2"/>
 
                 <x-jet-label for="district_present" value="{{ __('district_present') }}"/>
-                <x-jet-input id="district_present" type="text" class="mt-1 block w-full"
-                             wire:model.defer="address_information.district_present" autocomplete="district_present"/>
+                <select class="mt-1 block w-full" wire:model.defer="address_information.district_present"
+                        id="district_present" wire:change="changePermanentDistrict()">
+                    <option>Select</option>
+                    @foreach(\App\Helpers\GetDistrict::GetAllDistricts() as $key=>$val)
+                        <option value="{{__($val->DISTRICT_ID )}}">{{__($val->DISTRICT_NAME)}}</option>
+                    @endforeach
+                </select>
                 <x-jet-input-error for="address_information.district_present" class="mt-2"/>
 
                 <x-jet-label for="upazila_present" value="{{ __('upazila_present') }}"/>
@@ -382,115 +397,110 @@
             </div>
         </div>
     </div>
-    <style>
-        .pattern {
-            background-color: rgb(223, 219, 229);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M12 0h18v6h6v6h6v18h-6v6h-6v6H12v-6H6v-6H0V12h6V6h6V0zm12 6h-6v6h-6v6H6v6h6v6h6v6h6v-6h6v-6h6v-6h-6v-6h-6V6zm-6 12h6v6h-6v-6zm24 24h6v6h-6v-6z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
-        }
-    </style>
+
     {{--Commented out Children custom work--}}
-   {{-- <div class="p-5 flex flex-col" id="children_information">
-        <div class="p-5 bg-white shadow">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight p-3 text-center bg-gray-50">
-                {{ __('Children Information') }}
-            </h2>
-            <div class="pt-2 uppercase --}}{{--text-right--}}{{-- items-center">
-                <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-2">
-                    <x-jet-label class="col-span-1">Sl.</x-jet-label>
-                    <x-jet-label class="col-span-2">Name</x-jet-label>
-                    <x-jet-label class="col-span-2">Name (Bangla)</x-jet-label>
-                    <x-jet-label class="col-span-2">Date of Birth</x-jet-label>
-                    <x-jet-label class="col-span-2">Sex</x-jet-label>
-                    <x-jet-label class="col-span-2">Special Child?</x-jet-label>
-                    <x-jet-label class="col-span-1">Action</x-jet-label>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-2">
-                    @foreach($children_information as $key=>$child)
-                        <div class="col-span-1">#{{$key+1}}</div>
-                        <x-jet-input id="children_information.{{$key}}.name" type="text"
-                                     class="col-span-2 mt-1 block w-full"
-                                     wire:model.defer="children_information.{{$key}}.name"
-                                     autocomplete="children_information.{{$key}}.name"/>
-                        <x-jet-input-error for="children_information.{{$key}}.name" class="mt-2"/>
+    {{-- <div class="p-5 flex flex-col" id="children_information">
+         <div class="p-5 bg-white shadow">
+             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-3 text-center bg-gray-50">
+                 {{ __('Children Information') }}
+             </h2>
+             <div class="pt-2 uppercase --}}{{--text-right--}}{{-- items-center">
+                 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-2">
+                     <x-jet-label class="col-span-1">Sl.</x-jet-label>
+                     <x-jet-label class="col-span-2">Name</x-jet-label>
+                     <x-jet-label class="col-span-2">Name (Bangla)</x-jet-label>
+                     <x-jet-label class="col-span-2">Date of Birth</x-jet-label>
+                     <x-jet-label class="col-span-2">Sex</x-jet-label>
+                     <x-jet-label class="col-span-2">Special Child?</x-jet-label>
+                     <x-jet-label class="col-span-1">Action</x-jet-label>
+                 </div>
+                 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-2">
+                     @foreach($children_information as $key=>$child)
+                         <div class="col-span-1">#{{$key+1}}</div>
+                         <x-jet-input id="children_information.{{$key}}.name" type="text"
+                                      class="col-span-2 mt-1 block w-full"
+                                      wire:model.defer="children_information.{{$key}}.name"
+                                      autocomplete="children_information.{{$key}}.name"/>
+                         <x-jet-input-error for="children_information.{{$key}}.name" class="mt-2"/>
 
-                        <x-jet-input id="children_information.{{$key}}.name_bangla" type="text"
-                                     class="col-span-2 mt-1 block w-full"
-                                     wire:model.defer="children_information.{{$key}}.name_bangla"
-                                     autocomplete="children_information.{{$key}}.name_bangla"/>
-                        <x-jet-input-error for="children_information.{{$key}}.name_bangla" class="mt-2"/>
+                         <x-jet-input id="children_information.{{$key}}.name_bangla" type="text"
+                                      class="col-span-2 mt-1 block w-full"
+                                      wire:model.defer="children_information.{{$key}}.name_bangla"
+                                      autocomplete="children_information.{{$key}}.name_bangla"/>
+                         <x-jet-input-error for="children_information.{{$key}}.name_bangla" class="mt-2"/>
 
-                        <x-jet-input id="children_information.{{$key}}.date_of_birth" type="date"
-                                     class="col-span-2 mt-1 block w-full"
-                                     wire:model.defer="children_information.{{$key}}.date_of_birth"
-                                     autocomplete="children_information.{{$key}}.date_of_birth"/>
-                        <x-jet-input-error for="children_information.{{$key}}.date_of_birth" class="mt-2"/>
+                         <x-jet-input id="children_information.{{$key}}.date_of_birth" type="date"
+                                      class="col-span-2 mt-1 block w-full"
+                                      wire:model.defer="children_information.{{$key}}.date_of_birth"
+                                      autocomplete="children_information.{{$key}}.date_of_birth"/>
+                         <x-jet-input-error for="children_information.{{$key}}.date_of_birth" class="mt-2"/>
 
-                        <select wire:model.defer="children_information.{{$key}}.sex" class="col-span-2">
-                            <option>Select</option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
-                        </select>
-                        <x-jet-input-error for="children_information.{{$key}}.sex" class="mt-2"/>
+                         <select wire:model.defer="children_information.{{$key}}.sex" class="col-span-2">
+                             <option>Select</option>
+                             <option value="1">Male</option>
+                             <option value="2">Female</option>
+                         </select>
+                         <x-jet-input-error for="children_information.{{$key}}.sex" class="mt-2"/>
 
-                        <select wire:model.defer="children_information.{{$key}}.special_child" class="col-span-2">
-                            <option>Select</option>
-                            <option value="1">No</option>
-                            <option value="2">Yes</option>
-                        </select>
-                        <x-jet-input-error for="children_information.{{$key}}.special_child" class="mt-2"/>
+                         <select wire:model.defer="children_information.{{$key}}.special_child" class="col-span-2">
+                             <option>Select</option>
+                             <option value="1">No</option>
+                             <option value="2">Yes</option>
+                         </select>
+                         <x-jet-input-error for="children_information.{{$key}}.special_child" class="mt-2"/>
 
-                        <x-jet-danger-button class="grid place-items-center text-red-600 bg-blue-100"
-                                             wire:click="removeChildIndex({{$key}})" class="col-span-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                 stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
-                            </svg>
-                        </x-jet-danger-button>
-                    @endforeach
-                </div>
-            </div>
-            <x-jet-secondary-button wire:click="addChild()"
-                                    class="mt-5">
-                {{ __('+ Add') }}
-            </x-jet-secondary-button>
-        </div>
-    </div>--}}
-    <livewire:children_information></livewire:children_information>
-    <livewire:language_information></livewire:language_information>
-    <livewire:educational_qualification></livewire:educational_qualification>
-    <livewire:local_training></livewire:local_training>
-    <livewire:foreign_training></livewire:foreign_training>
-    <livewire:foreign_travel></livewire:foreign_travel>
-    <livewire:publication></livewire:publication>
-    <livewire:honors_award></livewire:honors_award>
-    <livewire:service_history></livewire:service_history>
-    <div class="bg-blue-100 p-3">
-        <x-jet-button wire:loading.attr="disabled" wire:click="update"
+                         <x-jet-danger-button class="grid place-items-center text-red-600 bg-blue-100"
+                                              wire:click="removeChildIndex({{$key}})" class="col-span-1">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                  stroke="currentColor" class="w-6 h-6">
+                                 <path stroke-linecap="round" stroke-linejoin="round"
+                                       d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+                             </svg>
+                         </x-jet-danger-button>
+                     @endforeach
+                 </div>
+             </div>
+             <x-jet-secondary-button wire:click="addChild()"
+                                     class="mt-5">
+                 {{ __('+ Add') }}
+             </x-jet-secondary-button>
+         </div>
+     </div>--}}
+    <livewire:children_information/>
+    <livewire:language_information/>
+    <livewire:educational_qualification/>
+    <livewire:local_training/>
+    <livewire:foreign_training/>
+    <livewire:foreign_travel/>
+    <livewire:publication/>
+    <livewire:honors_award/>
+    <livewire:service_history/>
+
+    <div class="bg-dodgerblue-100 p-3">
+        <x-jet-button wire:loading.attr="disabled" wire:click="update" style="background: dodgerblue;"
                       class="container mx-0 min-w-full grid place-items-center">
             {{ __('Update') }}
         </x-jet-button>
-
     </div>
 
-    <x-jet-confirmation-modal wire:model="confirmingChildDeletion">
-        <x-slot name="title">
-            Delete Children
-        </x-slot>
+    {{-- <x-jet-confirmation-modal wire:model="confirmingChildDeletion">
+         <x-slot name="title">
+             Delete Children
+         </x-slot>
 
-        <x-slot name="content">
-            Are you sure you want to delete Children?
-        </x-slot>
+         <x-slot name="content">
+             Are you sure you want to delete Children?
+         </x-slot>
 
-        <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('confirmingChildDeletion')" wire:loading.attr="disabled">
-                Nevermind
-            </x-jet-secondary-button>
+         <x-slot name="footer">
+             <x-jet-secondary-button wire:click="$toggle('confirmingChildDeletion')" wire:loading.attr="disabled">
+                 Nevermind
+             </x-jet-secondary-button>
 
-            <x-jet-danger-button class="ml-2" wire:click="removeChild" wire:loading.attr="disabled">
-                Delete Account
-            </x-jet-danger-button>
-        </x-slot>
-    </x-jet-confirmation-modal>
+             <x-jet-danger-button class="ml-2" wire:click="removeChild" wire:loading.attr="disabled">
+                 Delete Account
+             </x-jet-danger-button>
+         </x-slot>
+     </x-jet-confirmation-modal>--}}
 </div>
 

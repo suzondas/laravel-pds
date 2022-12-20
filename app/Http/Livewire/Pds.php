@@ -30,22 +30,25 @@ class Pds extends Component
     public $signature;
     public $date_of_prl;
     public $district_permanent = null;
-
+    public $degrees;
+    public $designations;
+    public $ranks;
+    public $offices;
 //    public $cI;
 //    public $children_information;
 //    public $deleteChildIndex;
-//    public $confirmingChildDeletion = false;
+    public $confirmingChildDeletion = false;
 
     protected $rules = [
-        'user.name' => 'required', //whatever rules you want
-        'user.name_bangla' => 'required',
+        'user.name' => ['required'], //whatever rules you want
+        'user.name_bangla' => ['required'],
 //        'photo' => ['required', 'mimes:jpg,jpeg,png', 'max:1024'],
 //        'signature' => ['required', 'mimes:jpg,jpeg,png', 'max:1024'],
 
-        'general_information.fathers_name' => 'required',
+        'general_information.fathers_name' => ['required'],
         'general_information.mothers_name' => ['required'],
-        'general_information.date_of_birth' => 'required',
-        'general_information.date_of_prl' => 'required',
+        'general_information.date_of_birth' => ['required'],
+        'general_information.date_of_prl' => ['required'],
         'general_information.rank' => ['required'],
         'general_information.home_dist' => ['required'],
         'general_information.designation' => ['required'],
@@ -55,47 +58,47 @@ class Pds extends Component
         'general_information.gender' => ['required'],
         'general_information.religion' => ['required'],
         'general_information.marital_status' => ['required'],
-        'general_information.nid' => ['required', 'integer', 'regex:/^(\d{10}|\d{13}|\d{17})$/'],
+        'general_information.nid' => ['required', 'integer', 'regex:/^(\d{10}|\d{17})$/'],
         'general_information.freedom_fighter' => ['required'],
         'general_information.email' => ['required', 'email'],
         'general_information.mobile' => ['required', 'max:11'],
 
         'personal_information.fathers_name_bangla' => ['required'],
         'personal_information.mothers_name_bangla' => ['required'],
-        'personal_information.fathers_nid' => [''],
-        'personal_information.mothers_nid' => [''],
-        'personal_information.official_mobile' => [''],
-        'personal_information.official_telephone' => [''],
-        'personal_information.official_email' => [''],
-        'personal_information.etin' => [''],
+        'personal_information.fathers_nid' => '',
+        'personal_information.mothers_nid' => '',
+        'personal_information.official_mobile' => '',
+        'personal_information.official_telephone' => '',
+        'personal_information.official_email' => '',
+        'personal_information.etin' => '',
         'personal_information.nationality' => ['required'],
-        'personal_information.blood_group' => [''],
-        'personal_information.passport_number' => [''],
-        'personal_information.passport_exp_date' => [''],
-        'personal_information.passport_issue_date' => [''],
-        'personal_information.remarks' => [''],
+        'personal_information.blood_group' => '',
+        'personal_information.passport_number' => '',
+        'personal_information.passport_exp_date' => '',
+        'personal_information.passport_issue_date' => '',
+        'personal_information.remarks' => '',
 
         'address_information.house_permanent' => ['required'],
         'address_information.village_permanent' => ['required'],
         'address_information.post_office_permanent' => ['required'],
         'address_information.upazila_permanent' => ['required'],
         'address_information.district_permanent' => ['required'],
-        'address_information.contact_permanent' => [],
+        'address_information.contact_permanent' => '',
         'address_information.house_present' => ['required'],
         'address_information.village_present' => ['required'],
         'address_information.post_office_present' => ['required'],
         'address_information.upazila_present' => ['required'],
         'address_information.district_present' => ['required'],
-        'address_information.contact_present' => [],
+        'address_information.contact_present' => '',
 
-        'spouse_information.name' => [''],
-        'spouse_information.name_bangla' => [''],
-        'spouse_information.nid' => [''],
-        'spouse_information.designation' => [''],
-        'spouse_information.occupation' => [''],
-        'spouse_information.location' => [''],
-        'spouse_information.home_dist' => [''],
-        'spouse_information.organization' => [''],
+        'spouse_information.name' => '',
+        'spouse_information.name_bangla' => '',
+        'spouse_information.nid' => '',
+        'spouse_information.designation' => '',
+        'spouse_information.occupation' => '',
+        'spouse_information.location' => '',
+        'spouse_information.home_dist' => '',
+        'spouse_information.organization' => '',
 
 //        'children_information.*.name' => ['required'],
 //        'children_information.*.name_bangla' => ['required'],
@@ -107,6 +110,7 @@ class Pds extends Component
     public function change_date_of_prl($val)
     {
         $this->date_of_prl = date('Y-m-d', strtotime("+59 year", strtotime($val)));
+        $this->general_information->date_of_prl = date('Y-m-d', strtotime("+59 year", strtotime($val)));
     }
 
     public function changePermanentDistrict()
@@ -160,6 +164,11 @@ class Pds extends Component
         }
         /*End Custom Model*/
 
+        $this->designations = \App\Models\Designations::all();
+//        dd($this->designations);
+        $this->degrees = \App\Models\Degrees::all();
+        $this->offices = \App\Models\Offices::all();
+
     }
 
     public function render()
@@ -169,6 +178,8 @@ class Pds extends Component
 
     public function update()
     {
+        $this->general_information->date_of_prl = $this->date_of_prl;
+        $this->user->general_information->date_of_prl = $this->date_of_prl;
         $this->validate();
 
         try {

@@ -1,8 +1,8 @@
 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
     <style>
-        .pds_photo{
+        .pds_photo {
             height: 100px !important;
-            width:100px !important;
+            width: 100px !important;
             border: 1px solid black;
         }
     </style>
@@ -20,49 +20,59 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             "/>
 
-        <x-jet-label class="font-bold text-center"  for="photo" value="{{ __('Photo') }}"/>
+        <x-jet-label class="font-bold text-center" for="photo" value="{{ __('Photo (300x300px)') }}"/>
 
         <!-- Current Profile Photo -->
-        <div class="mt-2 flex justify-center" x-show="! photoPreview">
-            <div class="w-64 relative group flex justify-center">
+        <div class="mt-2  justify-center" x-show="! photoPreview">
+            <div class="relative group flex  justify-center">
                 <img src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}"
                      class="pds_photo">
-                <div class="opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-0 bottom-0 flex justify-center items-end text-xl bg-gray-200 text-black font-semibold">
+            </div>
+            <div class="relative group flex  justify-center">
 
-                    <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
-                        {{ __('Select A New Photo') }}
+                <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </x-jet-secondary-button>
+
+                @if ($user->profile_photo_path)
+                    <x-jet-secondary-button type="button" class="mt-2"
+                                            wire:click="deleteProfilePhoto('{{$user->profile_photo_url}}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
                     </x-jet-secondary-button>
-
-                    @if ($user->profile_photo_path)
-                        <x-jet-secondary-button type="button" class="mt-2"
-                                                wire:click="deleteUserPhoto('{{$user->profile_photo_url}}')">
-                            {{ __('Remove Photo') }}
-                        </x-jet-secondary-button>
-                    @endif
-                </div>
+                @endif
             </div>
         </div>
 
         <!-- New Profile Photo Preview -->
-        <div class="mt-2 flex justify-center" x-show="photoPreview" style="display: none;">
+        <div class="mt-2  justify-center" x-show="photoPreview" style="display: none;">
 
-            <div class="w-64 relative group flex justify-center">
+            <div class="relative group flex justify-center">
                 <img x-bind:src="photoPreview" alt="{{ $user->name }}"
                      class="pds_photo">
+            </div>
+            <div class="relative group flex  justify-center">
+                <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                </x-jet-secondary-button>
 
-                <div class="opacity-0 group-hover:opacity-100 duration-300 absolute inset-x-0 bottom-0 flex justify-center items-end text-xl bg-gray-200 text-black font-semibold">
-
-                    <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
-                        {{ __('Select A New Photo') }}
+                @if ($user->profile_photo_path)
+                    <x-jet-secondary-button type="button" class="mt-2"
+                                            wire:click="deleteProfilePhoto('{{$user->profile_photo_url}}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
                     </x-jet-secondary-button>
-
-                    @if ($user->profile_photo_path)
-                        <x-jet-secondary-button type="button" class="mt-2"
-                                                wire:click="deleteUserPhoto('{{$user->profile_photo_url}}')">
-                            {{ __('Remove Photo') }}
-                        </x-jet-secondary-button>
-                    @endif
-                </div>
+                @endif
             </div>
         </div>
         <x-jet-input-error for="photo" class="mt-2"/>

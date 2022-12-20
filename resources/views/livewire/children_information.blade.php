@@ -12,7 +12,7 @@
              </div>
          </div>
      @endif--}}
-    <div class="p-5 flex flex-col" id="children_information">
+    <div class="p-5 flex flex-col" id="">
         <div class="p-5 bg-white shadow">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-3 text-center bg-gray-50">
                 {{ __('Children Information') }}

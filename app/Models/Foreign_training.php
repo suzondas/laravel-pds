@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Foreign_training extends Model
 {
     use HasFactory;
-    protected $table = 'Foreign_training';
+    protected $table = 'foreign_training';
     protected $fillable = [
         "user_id",
         "course_title",

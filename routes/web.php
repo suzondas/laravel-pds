@@ -32,4 +32,6 @@ Route::middleware([
     Route::get('/settings/offices', \App\Http\Livewire\Offices::class)->name('offices');
 //    Route::get('/settings/language', \App\Http\Livewire\Language_information::class)->name('language');
 //    Route::get('/settings/educational_qualification', \App\Http\Livewire\Educational_qualification::class)->name('educational_qualification');
+    Route::get('/settings',\App\Http\Livewire\Settings::class)->name('settings');
 });
+

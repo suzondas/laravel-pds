@@ -12,7 +12,7 @@
              </div>
          </div>
      @endif--}}
-    <div class="p-5 flex flex-col" id="language_information">
+    <div class="p-5 flex flex-col" id="">
         <div class="p-5 bg-white shadow">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-3 text-center bg-gray-50">
                 {{ __('Publication') }}
@@ -25,7 +25,7 @@
                                 <input wire:model="search"
                                        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-1/2"
                                        id="search" type="text" name="search" wire:model="search" required="required"
-                                       >
+                                >
                             </div>
                             <div>
                                 <button type="submit" wire:click.stop=""
@@ -144,7 +144,9 @@
 
                                         <div><label class='block'><span class='text-gray-700 @error('
                                                                         type_of_publication') text-red-500
-                                                @enderror'>Type of publication</span><select class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' wire:model='type_of_publication'>
+                                                @enderror'>Type of publication</span><select
+                                                        class='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50'
+                                                        wire:model='type_of_publication'>
                                                     <option selected>Select</option>
                                                     @foreach($pubType as $key=>$val)
                                                         <option value="{{$key}}">{{$val}}</option>
@@ -239,3 +241,4 @@
         @endif
         {{--    /delete popup--}}
     </div>
+</div>

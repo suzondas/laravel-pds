@@ -12,7 +12,7 @@
              </div>
          </div>
      @endif--}}
-    <div class="p-5 flex flex-col" id="educational_information">
+    <div class="p-5 flex flex-col" id="">
         <div class="p-5 bg-white shadow">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-3 text-center bg-gray-50">
                 {{ __('Educational Information') }}
@@ -25,7 +25,7 @@
                                 <input wire:model="search"
                                        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-1/2"
                                        id="search" type="text" name="search" wire:model="search" required="required"
-                                      placeholder="search">
+                                       placeholder="search">
                             </div>
                             <div>
                                 <button type="submit"
@@ -312,3 +312,4 @@
         @endif
         {{--    /delete popup--}}
     </div>
+</div>

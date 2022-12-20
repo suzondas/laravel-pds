@@ -12,7 +12,7 @@
     {{--</div>--}}
     {{--</div>--}}
     {{--@endif--}}
-    <div class="p-5 flex flex-col" id="language_information">
+    <div class="p-5 flex flex-col" id="">
         <div class="p-5 bg-white shadow">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-3 text-center bg-gray-50">
                 {{ __('Foreign Training') }}
@@ -24,8 +24,7 @@
                             <div class="w-1/4">
                                 <input wire:model="search"
                                        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm block mt-1 w-1/2"
-                                       id="search" type="text" name="search" wire:model="search" required="required"
-                                       >
+                                       id="search" type="text" name="search" wire:model="search" required="required">
                             </div>
                             <div>
                                 <button type="submit"
@@ -75,8 +74,6 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         DURATION (Y-M-D)
                                     </th>
-
-
 
 
                                     <th scope="col" class="relative px-6 py-3">
@@ -188,7 +185,8 @@
                                                         class='text-red-500 text-sm'>{{ $message }}</span>@enderror</label>
                                         </div>
                                         <div><label class='block'><span class='text-gray-700 @error(' from')
-                                                text-red-500 @enderror'>From</span><input type='date'  wire:change="changeDuration"
+                                                text-red-500 @enderror'>From</span><input type='date'
+                                                                                          wire:change="changeDuration"
                                                                                           class='mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('
                                                                                           from') border-red-500
                                                 @enderror focus:border-indigo-300 focus:ring focus:ring-indigo-200
@@ -196,7 +194,7 @@
                                                         class='text-red-500 text-sm'>{{ $message }}</span>@enderror</label>
                                         </div>
                                         <div><label class='block'><span class='text-gray-700 @error(' to') text-red-500
-                                                @enderror'>To</span><input type='date'  wire:change="changeDuration"
+                                                @enderror'>To</span><input type='date' wire:change="changeDuration"
                                                                            class='mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('
                                                                            to') border-red-500 @enderror
                                                 focus:border-indigo-300 focus:ring focus:ring-indigo-200
@@ -204,9 +202,11 @@
                                                         class='text-red-500 text-sm'>{{ $message }}</span>@enderror</label>
                                         </div>
                                         <div><label class='block'><span class='text-gray-700 @error(' duration')
-                                                text-red-500 @enderror'>Duration (Y-M-D)</span><input type='text' disabled
-                                                                                              class='mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('
-                                                                                              duration') border-red-500
+                                                text-red-500 @enderror'>Duration (Y-M-D)</span><input type='text'
+                                                                                                      disabled
+                                                                                                      class='mt-1 block w-full rounded-md border-gray-300 shadow-sm @error('
+                                                                                                      duration')
+                                                border-red-500
                                                 @enderror focus:border-indigo-300 focus:ring focus:ring-indigo-200
                                                 focus:ring-opacity-50' wire:model='duration'>@error('duration')<span
                                                         class='text-red-500 text-sm'>{{ $message }}</span>@enderror</label>
@@ -282,3 +282,4 @@
         @endif
         {{--    /delete popup--}}
     </div>
+</div>

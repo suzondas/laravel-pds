@@ -2,7 +2,7 @@
     {{--    @if (session()->has('message'))
             <?php toastr()->success(session('message'));?>
         @endif--}}
-    <div class="p-5 flex flex-col" id="language_information">
+    <div class="p-5 flex flex-col" id="">
         <div class="p-5 bg-white shadow">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-3 text-center bg-gray-50">
                 {{ __('Language Information') }}
