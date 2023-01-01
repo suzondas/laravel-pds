@@ -30,8 +30,10 @@ Route::middleware([
     Route::get('/settings/degrees', \App\Http\Livewire\Degrees::class)->name('degrees');
     Route::get('/settings/designations', \App\Http\Livewire\Designations::class)->name('designations');
     Route::get('/settings/offices', \App\Http\Livewire\Offices::class)->name('offices');
+    Route::get('/settings/wings', \App\Http\Livewire\Wings::class)->name('wings');
+    Route::get('/settings/subwings', \App\Http\Livewire\Subwings::class)->name('subwings');
 //    Route::get('/settings/language', \App\Http\Livewire\Language_information::class)->name('language');
 //    Route::get('/settings/educational_qualification', \App\Http\Livewire\Educational_qualification::class)->name('educational_qualification');
-    Route::get('/settings',\App\Http\Livewire\Settings::class)->name('settings');
+    Route::get('/settings', \App\Http\Livewire\Settings::class)->name('settings');
 });
 

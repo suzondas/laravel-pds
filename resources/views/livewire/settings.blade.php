@@ -9,5 +9,7 @@
         <a href="{{route('degrees')}}"><x-jet-secondary-button>Degrees</x-jet-secondary-button></a>
         <a href="{{route('designations')}}"><x-jet-secondary-button>Designations</x-jet-secondary-button></a>
         <a href="{{route('offices')}}"><x-jet-secondary-button>Offices</x-jet-secondary-button></a>
+        <a href="{{route('wings')}}"><x-jet-secondary-button>Wings</x-jet-secondary-button></a>
+        <a href="{{route('subwings')}}"><x-jet-secondary-button>Subwings</x-jet-secondary-button></a>
     </div>
 </div>
